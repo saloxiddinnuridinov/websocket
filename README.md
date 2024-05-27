@@ -1,10 +1,5 @@
 
-
-1)  php artisan infyom:api Model
-2)  php artisan l-5swagger:generate
-3)  integer:unsigned:foreign,table_name,id | required
-
-
+composer update
 php artisan serve
 php artisan websocket:serve
 php artisan queue:work
