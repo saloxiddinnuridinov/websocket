@@ -7,7 +7,7 @@ use InfyOm\Generator\Utils\ResponseUtil;
 /**
  * @OA\Server(url="/api/v1/")
  * @OA\Info(
- *   title="Skool.loc",
+ *   title="Zafar.loc",
  *   version="1.0.0"
  * )
  * @OA\SecurityScheme(

@@ -87,11 +87,6 @@ class AuthController extends Controller
 
         dispatch(new ProcessEmail($data));
 
-        $text = "Yangi: User ro'yhatdan o'tdi " . "%0D%0A" . "Full name: <b>" . $data['name'] . $data['surname'] . "</b>%0D%0A" .
-            "Email: <b>" . $data['email'] . "</b>";
-
-        TelegramManager::sendTelegram($text);
-
         return response()->json([
             'success' => true,
             'message' => $request->email . " ga faollashtirish kodi yuborildi",

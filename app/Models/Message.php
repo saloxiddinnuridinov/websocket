@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
  use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Crypt;
+
 /**
  * @OA\Schema(
  *      schema="Message",
@@ -70,7 +72,9 @@ use Illuminate\Database\Eloquent\Model;
  * )
  */class Message extends Model
 {
-    use HasFactory;    public $table = 'messages';
+    use HasFactory;
+
+    public $table = 'messages';
 
     public $fillable = [
         'chat_id',
@@ -80,7 +84,6 @@ use Illuminate\Database\Eloquent\Model;
         'file_url',
         'token'
     ];
-
     protected $casts = [
         'chat_id' => 'integer',
         'text' => 'string',

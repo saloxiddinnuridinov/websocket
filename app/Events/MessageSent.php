@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Http\Helpers\Encryption;
 use App\Http\Resources\V1\Websocket\MessageResource;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -31,7 +32,6 @@ class MessageSent implements ShouldBroadcast
     public function broadcastWith()
     {
         $model = new MessageResource($this->message);
-        print_r( $model );
         return [
             'message' => $model
         ];
@@ -45,7 +45,9 @@ class MessageSent implements ShouldBroadcast
     public function broadcastOn()
     {
         $chId = $this->message->chat_id;
-        echo "Message broadcastOn funksiyasi. ChatID: " . $chId;
-        return new Channel('chat_' .$chId);
+        $r = Encryption::encryptMessage($this->message->text);
+        echo "Message broadcastOn funksiyasi. ChatID: " .Encryption::decryptMessage($this->message->text);
+//        echo "Message broadcastOn funksiyasi. ChatID: " . Encryption::decryptMessage($this->message->text);
+        new Channel('chat_' .$chId);
     }
 }

@@ -39,7 +39,7 @@ class CreateChat implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        echo "Create Chat Eventi " . $this->user_id;
+      //  echo "Create Chat Eventi " . $this->user_id;
         return [
             new Channel('create_chat_' . $this->user_id),
         ];

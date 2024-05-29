@@ -45,7 +45,7 @@ class GroupChatMessage implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        echo "Message broadcastOn funksiyasi. ChatID: " . $this->group_username;
+//        echo "Message broadcastOn funksiyasi. ChatID: " . $this->group_username;
         return new Channel('group_chat_' . $this->group_username);
     }
 }

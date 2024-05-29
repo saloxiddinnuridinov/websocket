@@ -8,6 +8,7 @@ use App\Events\MessageSent;
 use App\Events\ReadMessage;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\Encryption;
 use App\Http\Resources\V1\ChatUserResource;
 use App\Http\Resources\V1\MessageResource;
 use App\Http\ValidatorResponse;
@@ -106,7 +107,7 @@ class ChatController extends AppBaseController
         $message = new Message();
         $message->sender_id = $auth_user->id;
         $message->chat_id = $chat->id;
-        $message->text = $request->text;
+        $message->text = Encryption::encryptMessage($request->text);
         $message->save();
         $message->token = $request->token;
         if ($isNew) {
@@ -115,7 +116,7 @@ class ChatController extends AppBaseController
             broadcast(new MessageSent($message));
         }
 
-        return $this->sendSuccess($message);
+        return $this->sendSuccess($request->all());
     }
 
     public function readMessage(Request $request)
@@ -205,13 +206,14 @@ class ChatController extends AppBaseController
             return $this->sendError('Chat Not found');
         }
 
-        $message_chat = Message::where("chat_id", $chat->id)
+          $message_chat = Message::where("chat_id", $chat->id)
             ->orderByDesc('created_at')
             ->paginate($paginate);
+        return MessageResource::collection($message_chat);
 
         $data = [
             'success' => true,
-            'data' => MessageResource::collection($message_chat),
+            //'data' => MessageResource::collection($message_chat),
             'meta' => [
                 'current_page' => $message_chat->currentPage(),
                 'from' => $message_chat->firstItem(),
